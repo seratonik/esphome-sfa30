@@ -11,7 +11,7 @@ ESP32.
 
 The sensor includes an onboard humidity and temperature sensor as well to
 aid in its internal algorithm, and those values are exposed through this
-component in addition to the ppb formadehyde levels.
+component in addition to the ppb formaldehyde levels.
 
 Read about the SFA30 and find its datasheet here:
 https://sensirion.com/products/catalog/SFA30
