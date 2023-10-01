@@ -1,0 +1,61 @@
+esphome:
+  name: airquality1
+
+  # Include and Libraries are required for the module to work
+  includes:
+    - sfa30.h
+  libraries:
+    - "Wire"
+    - "sensirion/Sensirion Core"
+    - "sensirion/Sensirion I2C SFA3x"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+i2c:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  password: ""
+
+wifi:
+  ssid: ""
+  password: ""
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Airquality1_Fallback"
+    password: ""
+
+captive_portal:
+    
+sensor:
+
+  # Custom sensor definition to pull multiple values from the SFA30
+  - platform: custom
+    lambda: |-
+      auto sfa30_sensor = new SFA30();
+      App.register_component(sfa30_sensor);
+      return {sfa30_sensor->temperature_sensor, sfa30_sensor->humidity_sensor, sfa30_sensor->hcho_sensor};
+
+    sensors:
+      - name: "Temperature Sensor"
+        id: temp_1
+        accuracy_decimals: 1
+        unit_of_measurement: °C
+      - name: "Humidity Sensor"
+        accuracy_decimals: 1
+        unit_of_measurement: '%'
+        id: humid_1
+      - name: "HCHO Sensor"
+        accuracy_decimals: 1
+        unit_of_measurement: ppb
+        id: hcho_1
